@@ -1,3 +1,5 @@
+using movie_library.Config;
+
 namespace movie_library;
 
 public class Startup
@@ -14,6 +16,8 @@ public class Startup
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
+        services.Configure<DatabaseConfig>(Configuration.GetSection("DB"));
+        
         services.AddControllers()
             .AddJsonOptions(
                 options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
