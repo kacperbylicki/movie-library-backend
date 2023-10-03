@@ -4,6 +4,7 @@ using Amazon.S3;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using movie_library.Config;
+using movie_library.Services;
 
 namespace movie_library;
 
@@ -33,6 +34,10 @@ public class Startup
 
         services.AddCognitoIdentity();
         services.AddAWSService<IAmazonS3>();
+        
+        services.AddSingleton<AccountsService>();
+        services.AddSingleton<MoviesService>();
+        services.AddSingleton<ImagesService>();
         
         services.AddAuthentication(options =>
         {
