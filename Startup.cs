@@ -38,6 +38,7 @@ public class Startup
         services.AddSingleton<AccountsService>();
         services.AddSingleton<MoviesService>();
         services.AddSingleton<ImagesService>();
+        services.AddSingleton<FavoritesService>();
         
         services.AddAuthentication(options =>
         {
