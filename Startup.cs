@@ -38,6 +38,8 @@ public class Startup
         services.AddSingleton<AccountsService>();
         services.AddSingleton<MoviesService>();
         services.AddSingleton<ImagesService>();
+        services.AddSingleton<RentalsService>();
+        services.AddSingleton<VideosService>();
         
         services.AddAuthentication(options =>
         {
