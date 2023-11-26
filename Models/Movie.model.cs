@@ -46,4 +46,12 @@ public class Movie : BaseModel
     [Range(1900, 2023)]
     [Required]
     public int ReleaseYear { get; init; }
+    
+    [BsonElement("ratings")]
+    [JsonPropertyName("ratings")]
+    public List<Rating?> Ratings { get; init; } = new();
+
+    [BsonElement("comments")]
+    [JsonPropertyName("comments")]
+    public List<Comment?> Comments { get; init; } = new();
 }
