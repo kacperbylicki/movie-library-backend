@@ -15,12 +15,14 @@ namespace movie_library.Controllers
         private readonly ILogger<MoviesController> _logger;
         private readonly MoviesService _moviesService;
         private readonly AccountsService _accountsService;
+        private readonly FavoritesService _favoritesService;
         
-        public MoviesController(ILogger<MoviesController> logger, MoviesService moviesService, AccountsService accountsService)
+        public MoviesController(ILogger<MoviesController> logger, MoviesService moviesService, AccountsService accountsService, FavoritesService favoritesService)
         {
             _logger = logger;
             _moviesService = moviesService;
             _accountsService = accountsService;
+            _favoritesService = favoritesService;
         }
 
         [HttpGet]
@@ -108,6 +110,46 @@ namespace movie_library.Controllers
             catch (MovieNotFoundException)
             {
                 return NotFound();
+            }
+            catch (UserNotFoundException)
+            {
+                return Forbid();
+            }
+        }
+        
+        [HttpPost("{movieId:length(24)}/favorite")]
+        [Authorize]
+        public async Task<IActionResult> UpsertFavoriteMovie([FromHeader(Name = "Authorization")] string accessToken, string movieId, FavoriteDto dto)
+        {
+            try
+            {
+                var user = await _accountsService.GetUserAsync(accessToken);
+                
+                await _favoritesService.UpsertFavoriteMovieAsync(user, dto, movieId);
+
+                return Ok();
+            }
+            catch (MovieNotFoundException)
+            {
+                return UnprocessableEntity();
+            }
+            catch (UserNotFoundException)
+            {
+                return Forbid();
+            }
+        }
+        
+        [HttpGet("favorites")]
+        [Authorize]
+        public async Task<ActionResult<List<Favorite>>> GetUserFavoriteMovies([FromHeader(Name = "Authorization")] string accessToken)
+        {
+            try
+            {
+                var user = await _accountsService.GetUserAsync(accessToken);
+                
+                var favorites = await _favoritesService.GetUserFavoriteMoviesAsync(user.Id);
+
+                return favorites;
             }
             catch (UserNotFoundException)
             {
