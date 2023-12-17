@@ -40,6 +40,7 @@ public class Startup
         services.AddSingleton<ImagesService>();
         services.AddSingleton<CommentsService>();
         services.AddSingleton<RatingsService>();
+        services.AddSingleton<FavoritesService>();
         
         services.AddAuthentication(options =>
         {
