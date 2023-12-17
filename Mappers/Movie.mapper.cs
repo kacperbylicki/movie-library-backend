@@ -38,6 +38,8 @@ public class MovieMapper
             Directors = dto.Directors ?? entity.Directors,
             Roles = dto.Roles ?? entity.Roles,
             ReleaseYear = dto.ReleaseYear ?? entity.ReleaseYear,
+            Ratings = entity.Ratings,
+            Comments = entity.Comments,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = DateTime.Now
         };

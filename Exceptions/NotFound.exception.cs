@@ -13,3 +13,15 @@ public class MovieNotFoundException : NotFoundException
     public MovieNotFoundException(): base("movie") {}
 }
 
+[Serializable]
+public class CommentNotFoundException : NotFoundException
+{
+    public CommentNotFoundException(): base("comment") {}
+}
+
+[Serializable]
+public class RatingNotFoundException : NotFoundException
+{
+    public RatingNotFoundException(): base("rating") {}
+}
+
