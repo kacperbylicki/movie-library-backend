@@ -10,6 +10,21 @@ public class MoviesRepositoryUtils
     {
         return Builders<Movie>.Filter.Eq("Id", movieId);
     }
+    
+    public static FilterDefinition<Movie> GetCommentFilter(string movieId, string commentId)
+    {
+        return
+            Builders<Movie>.Filter.Eq("Id", movieId) & 
+            Builders<Movie>.Filter.ElemMatch<Comment>(movie => movie.Comments!, x => x.Id == commentId);
+    }
+
+    public static FilterDefinition<Movie> GetRatingFilter(string movieId, string ratingId)
+    {
+        return
+            Builders<Movie>.Filter.Eq("Id", movieId) &
+            Builders<Movie>.Filter.ElemMatch<Rating>(movie => movie.Ratings!, x => x.Id == ratingId);
+    }
+    
     public static UpdateDefinition<Movie> GetCreateUpdate(string fieldName, object element)
     {
         return Builders<Movie>.Update.Push(fieldName, element);
